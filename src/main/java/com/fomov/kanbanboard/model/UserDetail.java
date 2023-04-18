@@ -2,6 +2,7 @@ package com.fomov.kanbanboard.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -21,6 +22,9 @@ public class UserDetail {
     @Column(name = "position", nullable = false)
     private String position;
 
+    @Column(name = "date_of_created", nullable = false)
+    private LocalDateTime dateOfCreated;
+
     @OneToOne(mappedBy = "userDetail",
             fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE,
@@ -29,11 +33,12 @@ public class UserDetail {
 
     public UserDetail() {}
 
-    public UserDetail(int id, String firstName, String lastName, String position, User user) {
+    public UserDetail(int id, String firstName, String lastName, String position, LocalDateTime dateOfCreated, User user) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.position = position;
+        this.dateOfCreated = dateOfCreated;
         this.user = user;
     }
 
@@ -69,6 +74,14 @@ public class UserDetail {
         this.position = position;
     }
 
+    public LocalDateTime getDateOfCreated() {
+        return dateOfCreated;
+    }
+
+    public void setDateOfCreated(LocalDateTime dateOfCreated) {
+        this.dateOfCreated = dateOfCreated;
+    }
+
     public User getUser() {
         return user;
     }
@@ -82,11 +95,11 @@ public class UserDetail {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserDetail that = (UserDetail) o;
-        return id == that.id && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(position, that.position) && Objects.equals(user, that.user);
+        return id == that.id && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(position, that.position) && Objects.equals(dateOfCreated, that.dateOfCreated) && Objects.equals(user, that.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, position, user);
+        return Objects.hash(id, firstName, lastName, position, dateOfCreated, user);
     }
 }
