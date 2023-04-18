@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
@@ -27,26 +28,36 @@ public class User implements UserDetails {
     @Column(name = "active")
     private boolean active;
 
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
+
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
+
+    @Column(name = "position", nullable = false)
+    private String position;
+
+    @Column(name = "date_of_created", nullable = false)
+    private LocalDateTime dateOfCreated;
+
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles = new HashSet<>();
 
-    @OneToOne(fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_detail_id", nullable = false)
-    private UserDetail userDetail;
-
     public User() {}
 
-    public User(int id, String email, String password, boolean active, Set<Role> roles, UserDetail userDetail) {
+    public User(int id, String email, String password, boolean active, String firstName, String lastName, String position, LocalDateTime dateOfCreated, Set<Role> roles) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.active = active;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.position = position;
+        this.dateOfCreated = dateOfCreated;
         this.roles = roles;
-        this.userDetail = userDetail;
     }
 
     public int getId() {
@@ -82,20 +93,32 @@ public class User implements UserDetails {
         this.active = active;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public UserDetail getUserDetail() {
-        return userDetail;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setUserDetail(UserDetail userDetail) {
-        this.userDetail = userDetail;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public LocalDateTime getDateOfCreated() {
+        return dateOfCreated;
     }
 
     @Override
@@ -103,14 +126,25 @@ public class User implements UserDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && active == user.active && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles) && Objects.equals(userDetail, user.userDetail);
+        return id == user.id && active == user.active && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(position, user.position) && Objects.equals(dateOfCreated, user.dateOfCreated) && Objects.equals(roles, user.roles);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, password, active, roles, userDetail);
+        return Objects.hash(id, email, password, active, firstName, lastName, position, dateOfCreated, roles);
     }
 
+    public void setDateOfCreated(LocalDateTime dateOfCreated) {
+        this.dateOfCreated = dateOfCreated;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 
     //Security
     @Override
