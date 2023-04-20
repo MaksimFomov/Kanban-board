@@ -6,14 +6,13 @@
     </head>
 
     <body>
-        <div th:if="${param.error}">
-            Invalid username and password.
-        </div>
-
         <form th:method="POST" th:action="@{/registration}" th:object="${user}">
-            <label> First name : <input type="text" th:value="*{firstName}" name="firstName"/> </label><br>
-            <label> Last name : <input type="text" th:value="*{lastName}" name="lastName"/> </label><br>
-            <label> Email : <input type="text" th:value="*{email}" name="email"/> </label><br>
+            <label> First name : <input type="text" th:value="*{firstName}" id="firstName" name="firstName" required/> </label><br>
+            <label> Last name : <input type="text" th:value="*{lastName}" id="lastName" name="lastName" required/> </label><br>
+            <label> Email : <input type="text" th:value="*{email}" id="email" name="email" required pattern="^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$"/> </label><br>
+            <div th:if="${errorMessage}">
+                <a1 style="color: red" th:text="${errorMessage}"></a1>
+            </div>
             <label>Your position:</label>
             <select th:field="*{position}">
                 <option th:value="'Backend developer'">Backend developer</option>
@@ -24,14 +23,11 @@
                 <option th:value="'Project Manager'">Project Manager</option>
                 <option th:value="'Product Manager'">Product Manager</option>
             </select><br/>
-            <label> Password: <input type="password" th:value="*{password}" name="password"/> </label><br>
-            <label> Repeat password: <input type="password" name="repeatPassword"/> </label><br>
+            <label> Password: <input type="password" th:value="*{password}" id="password" name="password" required pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"/> </label><br>
             <input type="hidden" th:name="${_csrf.parameterName}"  th:value="${_csrf.token}"/>
             <input type="submit" value="Sign up"/>
         </form>
 
-        <div th:if="${errorMessage}">
-            <h2 style="color: red" th:text="${errorMessage}"></h2>
-        </div>
+        <a href="/login">Login</a>
     </body>
 </html>

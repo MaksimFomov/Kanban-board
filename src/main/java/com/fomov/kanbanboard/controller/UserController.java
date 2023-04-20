@@ -29,7 +29,7 @@ public class UserController {
     @PostMapping("/registration")
     public String createUser(@ModelAttribute("user") User user, Model model) {
         if (!userService.createUser(user)) {
-            model.addAttribute("errorMessage", "Пользователь с email " + user.getEmail() + " уже существует");
+            model.addAttribute("errorMessage", "User with email " + user.getEmail() + " already exists");
             return "registration";
         }
 
