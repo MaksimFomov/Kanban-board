@@ -14,7 +14,16 @@
             <label> First name : <input type="text" th:value="*{firstName}" name="firstName"/> </label><br>
             <label> Last name : <input type="text" th:value="*{lastName}" name="lastName"/> </label><br>
             <label> Email : <input type="text" th:value="*{email}" name="email"/> </label><br>
-            <label> Position : <input type="text" th:value="*{position}" name="position"/> </label><br>
+            <label>Your position:</label>
+            <select th:field="*{position}">
+                <option th:value="'Backend developer'">Backend developer</option>
+                <option th:value="'Frontend developer'">Frontend developer</option>
+                <option th:value="'QA engineer'">QA engineer</option>
+                <option th:value="'Designer'">Designer</option>
+                <option th:value="'Bussines Analyst'">Bussines Analyst</option>
+                <option th:value="'Project Manager'">Project Manager</option>
+                <option th:value="'Product Manager'">Product Manager</option>
+            </select><br/>
             <label> Password: <input type="password" th:value="*{password}" name="password"/> </label><br>
             <label> Repeat password: <input type="password" name="repeatPassword"/> </label><br>
             <input type="hidden" th:name="${_csrf.parameterName}"  th:value="${_csrf.token}"/>
