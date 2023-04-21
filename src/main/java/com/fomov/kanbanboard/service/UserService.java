@@ -21,11 +21,19 @@ public class UserService {
     public boolean createUser(User user) {
         if(userRepository.findByEmail(user.getEmail()) != null) return false;
 
+        String userPosition = user.getPosition();
+
         user.setActive(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setDateOfCreated(LocalDateTime.now());
-        user.getRoles().add(Role.ROLE_USER);
+        if(userPosition.equals("Project Manager") || userPosition.equals("Product Manager")) {
+            user.getRoles().add(Role.ROLE_MANAGER);
+        }
+        else {
+            user.getRoles().add(Role.ROLE_USER);
+        }
         userRepository.save(user);
+
         return true;
     }
 }
