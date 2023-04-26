@@ -46,9 +46,18 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles = new HashSet<>();
 
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+                    CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(
+            name = "user_project",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "project_id"))
+    private Set<Project> projects;
+
     public User() {}
 
-    public User(int id, String email, String password, boolean active, String firstName, String lastName, String position, LocalDateTime dateOfCreated, Set<Role> roles) {
+    public User(int id, String email, String password, boolean active, String firstName, String lastName, String position, LocalDateTime dateOfCreated, Set<Role> roles, Set<Project> projects) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -58,6 +67,7 @@ public class User implements UserDetails {
         this.position = position;
         this.dateOfCreated = dateOfCreated;
         this.roles = roles;
+        this.projects = projects;
     }
 
     public int getId() {
@@ -121,19 +131,6 @@ public class User implements UserDetails {
         return dateOfCreated;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id == user.id && active == user.active && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(position, user.position) && Objects.equals(dateOfCreated, user.dateOfCreated) && Objects.equals(roles, user.roles);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, email, password, active, firstName, lastName, position, dateOfCreated, roles);
-    }
-
     public void setDateOfCreated(LocalDateTime dateOfCreated) {
         this.dateOfCreated = dateOfCreated;
     }
@@ -144,6 +141,27 @@ public class User implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public Set<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(Set<Project> projects) {
+        this.projects = projects;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id && active == user.active && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(position, user.position) && Objects.equals(dateOfCreated, user.dateOfCreated) && Objects.equals(roles, user.roles) && Objects.equals(projects, user.projects);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email, password, active, firstName, lastName, position, dateOfCreated, roles, projects);
     }
 
     //Security

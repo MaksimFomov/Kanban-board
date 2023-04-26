@@ -4,13 +4,42 @@
 
     <head>
         <title>Hello!</title>
+        <link rel="stylesheet" type="text/css" href="css/homePageStyle.css">
     </head>
 
     <body>
-        <h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name">thymeleaf</span>!</h1>
+        <div>
+            <h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name">thymeleaf</span>!</h1>
 
-        <form th:action="@{/logout}" method="post">
-            <input type="submit" value="Sign Out"/>
-        </form>
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" value="Sign Out"/>
+            </form>
+        </div>
+        <br/>
+        <div th:if="${userRole == '[ROLE_MANAGER]'}">
+            <button class="create-project-btn" onclick="openModal()">Create project</button>
+
+            <div id="create-project-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <form th:method="POST" th:action="@{/createProject}" th:object="${project}">
+                        <label for="name">Name:</label>
+                        <input type="text" th:value="*{name}" id="name" name="name" required>
+
+                        <label for="description">Description:</label>
+                        <textarea id="description" th:value="*{description}" name="description"></textarea>
+
+                        <label for="team">Team:</label>
+                        <select th:value="*{users}" multiple id="team" name="team">
+                            <option th:each="user : ${users}" th:value="${user}" th:text="${user}"></option>
+                        </select>
+
+                        <button type="submit">Create</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/homePageScript.js"></script>
     </body>
 </html>

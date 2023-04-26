@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -35,5 +36,9 @@ public class UserService {
         userRepository.save(user);
 
         return true;
+    }
+
+    public List<User> getUsers() {
+        return userRepository.findAll();
     }
 }
