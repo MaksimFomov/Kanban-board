@@ -24,14 +24,14 @@
                     <span class="close" onclick="closeModal()">&times;</span>
                     <form th:method="POST" th:action="@{/createProject}" th:object="${project}">
                         <label for="name">Name:</label>
-                        <input type="text" th:value="*{name}" id="name" name="name" required>
+                        <input type="text" th:field="*{name}" id="name" name="name" required>
 
                         <label for="description">Description:</label>
-                        <textarea id="description" th:value="*{description}" name="description"></textarea>
+                        <textarea id="description" th:field="*{description}" name="description" required></textarea>
 
                         <label for="team">Team:</label>
-                        <select th:value="*{users}" multiple id="team" name="team">
-                            <option th:each="user : ${users}" th:value="${user}" th:text="${user}"></option>
+                        <select th:field="*{users}" id="team" name="team" multiple="multiple">
+                            <option th:each="user : ${allUsers}" th:value="${user.id}" th:text="${user.email} + ' (' + ${user.position} + ')'"></option>
                         </select>
 
                         <button type="submit">Create</button>

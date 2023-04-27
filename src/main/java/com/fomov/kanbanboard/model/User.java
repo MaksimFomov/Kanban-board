@@ -46,14 +46,11 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY,
+    @ManyToMany(mappedBy = "users",
+            fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE,
                     CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinTable(
-            name = "user_project",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "project_id"))
-    private Set<Project> projects;
+    private Set<Project> projects = new HashSet<>();
 
     public User() {}
 

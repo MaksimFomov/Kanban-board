@@ -3,6 +3,7 @@ package com.fomov.kanbanboard.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -22,11 +23,14 @@ public class Project {
     @Column(name = "date_of_created", nullable = false)
     private LocalDateTime dateOfCreated;
 
-    @ManyToMany(mappedBy = "projects",
-            fetch = FetchType.LAZY,
+    @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE,
                     CascadeType.DETACH, CascadeType.REFRESH})
-    private Set<User> users;
+    @JoinTable(
+            name = "project_user",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<User> users = new HashSet<>();
 
     public Project() {
     }

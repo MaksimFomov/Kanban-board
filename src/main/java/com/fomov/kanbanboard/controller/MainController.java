@@ -27,7 +27,7 @@ public class MainController {
 
         model.addAttribute("userRole", user.getRoles().toString());
         model.addAttribute("project", new Project());
-        model.addAttribute("users", userService.getUsers());
+        model.addAttribute("allUsers", userService.getAllUsers());
         return "homePage";
     }
 }
