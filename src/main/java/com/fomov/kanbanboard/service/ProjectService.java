@@ -38,4 +38,8 @@ public class ProjectService {
 
         return true;
     }
+
+    public List<Project> getAllProjects() {
+        return projectRepository.findAll();
+    }
 }

@@ -40,6 +40,35 @@
             </div>
         </div>
 
+        <div th:if="${not #lists.isEmpty(projects)}">
+            <table>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Users</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="project : ${projects}">
+                    <td th:text="${project.name}"></td>
+                    <td th:text="${project.description}"></td>
+                    <td>
+                        <ul>
+                            <li th:each="user : ${project.users}" th:text="${user.email} + ' (' + ${user.position} + ')'"></li>
+                        </ul>
+                    </td>
+                    <td>
+                        <a th:href="@{/projects/open/{id}(id=${project.id})}">Open</a>
+                        <a th:href="@{/projects/edit/{id}(id=${project.id})}">Edit</a>
+                        <a th:href="@{/projects/delete/{id}(id=${project.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
         <script src="js/homePageScript.js"></script>
     </body>
 </html>
