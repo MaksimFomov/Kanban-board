@@ -1,53 +1,145 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Kanban Board</title>
-    <!-- Подключение стилей -->
+    <meta charset="UTF-8">
+    <title>Create Task</title>
     <link rel="stylesheet" type="text/css" href="css/kanbanBoard.css">
 </head>
 <body>
-<div class="header">
-    <h1>Kanban Board</h1>
-    <button id="createTaskBtn">Create Task</button>
-</div>
+<button type="button" class="btn btn-primary" onclick="openModal()">Create Task</button>
 
-<!-- Модальное окно -->
 <div id="modal" class="modal">
     <div class="modal-content">
-        <span class="close">&times;</span>
-        <form id="taskForm">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
-
-            <label for="description">Description:</label>
-            <textarea id="description" name="description" required></textarea>
-
-            <label for="estimate">Estimate:</label>
-            <input type="text" id="estimate" name="estimate">
-
-            <label for="priority">Priority:</label>
-            <select id="priority" name="priority" required>
-                <option value="">--Select Priority--</option>
-                <option value="Critical">Critical</option>
-                <option value="Major">Major</option>
-                <option value="Normal">Normal</option>
-                <option value="Trivial">Trivial</option>
-            </select>
-
-            <label for="sprint">Sprint:</label>
-            <select id="sprint" name="sprint" required>
-                <option value="">--Select Sprint--</option>
-                <option value="Sprint1">Sprint1</option>
-                <option value="Sprint2">Sprint2</option>
-                <option value="Sprint3">Sprint3</option>
-            </select>
-
-            <input type="submit" value="Create">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Create Task</h2>
+        <form>
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div>
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" required></textarea>
+            </div>
+            <div>
+                <label for="estimate">Estimate:</label>
+                <input type="text" id="estimate" name="estimate">
+            </div>
+            <div>
+                <label for="priority">Priority:</label>
+                <select id="priority" name="priority" required>
+                    <option value="">Select a priority</option>
+                    <option value="Critical">Critical</option>
+                    <option value="Major">Major</option>
+                    <option value="Normal">Normal</option>
+                    <option value="Trivial">Trivial</option>
+                </select>
+            </div>
+            <div>
+                <label for="status">Status:</label>
+                <select id="status" name="status" required>
+                    <option value="">Select a status</option>
+                    <option value="Backlog">Backlog</option>
+                    <option value="In progress">In progress</option>
+                    <option value="QA">QA</option>
+                    <option value="Done">Done</option>
+                </select>
+            </div>
+            <div>
+                <label for="sprint">Sprint:</label>
+                <select id="sprint" name="sprint" required>
+                    <option value="">Select a sprint</option>
+                    <option value="Sprint1">Sprint1</option>
+                    <option value="Sprint2">Sprint2</option>
+                    <option value="Sprint3">Sprint3</option>
+                </select>
+            </div>
+            <div>
+                <input type="submit" value="Create">
+            </div>
         </form>
     </div>
 </div>
 
-<!-- Подключение скриптов -->
+<div class="kanban-board">
+    <div class="column">
+        <h2>Backlog</h2>
+        <div class="task">
+            <h3>Task 1</h3>
+            <p>Description of task 1</p>
+            <span>Estimate: 1 day</span>
+            <span>Priority: Critical</span>
+            <span>Status: Backlog</span>
+            <span>Sprint: Sprint1</span>
+        </div>
+        <div class="task">
+            <h3>Task 2</h3>
+            <p>Description of task 2</p>
+            <span>Estimate: 2 days</span>
+            <span>Priority: Normal</span>
+            <span>Status: Backlog</span>
+            <span>Sprint: Sprint2</span>
+        </div>
+    </div>
+    <div class="column">
+        <h2>In progress</h2>
+        <div class="task">
+            <h3>Task 3</h3>
+            <p>Description of task 3</p>
+            <span>Estimate: 3 days</span>
+            <span>Priority: Major</span>
+            <span>Status: In progress</span>
+            <span>Sprint: Sprint2</span>
+        </div>
+        <div class="task">
+            <h3>Task 4</h3>
+            <p>Description of task 4</p>
+            <span>Estimate: 1 day</span>
+            <span>Priority: Trivial</span>
+            <span>Status: In progress</span>
+            <span>Sprint: Sprint3</span>
+        </div>
+    </div>
+    <div class="column">
+        <h2>QA</h2>
+        <div class="task">
+            <h3>Task 5</h3>
+            <p>Description of task 5</p>
+            <span>Estimate: 2 days</span>
+            <span>Priority: Normal</span>
+            <span>Status: QA</span>
+            <span>Sprint: Sprint3</span>
+        </div>
+    </div>
+    <div class="column">
+        <h2>Done</h2>
+        <div class="task">
+            <h3>Task 6</h3>
+            <p>Description of task 6</p>
+            <span>Estimate: 1 day</span>
+            <span>Priority: Trivial</span>
+            <span>Status: Done</span>
+            <span>Sprint: Sprint1</span>
+        </div>
+        <div class="task">
+            <h3>Task 7</h3>
+            <p>Description of task 7</p>
+            <span>Estimate: 3 days</span>
+            <span>Priority: Major</span>
+            <span>Status: Done</span>
+            <span>Sprint: Sprint2</span>
+        </div>
+        <div class="task">
+            <h3>Task 8</h3>
+            <p>Description of task 8</p>
+            <span>Estimate: 2 days</span>
+            <span>Priority: Normal</span>
+            <span>Status: Done</span>
+            <span>Sprint: Sprint3</span>
+        </div>
+    </div>
+</div>
+
 <script src="js/kanbanBoard.js"></script>
 </body>
 </html>
