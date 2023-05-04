@@ -4,6 +4,7 @@ import com.fomov.kanbanboard.model.Project;
 import com.fomov.kanbanboard.model.User;
 import com.fomov.kanbanboard.repository.ProjectRepository;
 import com.fomov.kanbanboard.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,6 +23,7 @@ public class ProjectService {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public boolean createProject(Project project, List<Long> userIds) {
         if(projectRepository.findByName(project.getName()) != null) return false;
 

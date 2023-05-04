@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kanban Board</title>
+    <!-- Подключение стилей -->
+    <link rel="stylesheet" type="text/css" href="css/kanbanBoard.css">
+</head>
+<body>
+<div class="header">
+    <h1>Kanban Board</h1>
+    <button id="createTaskBtn">Create Task</button>
+</div>
+
+<!-- Модальное окно -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <form id="taskForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+
+            <label for="estimate">Estimate:</label>
+            <input type="text" id="estimate" name="estimate">
+
+            <label for="priority">Priority:</label>
+            <select id="priority" name="priority" required>
+                <option value="">--Select Priority--</option>
+                <option value="Critical">Critical</option>
+                <option value="Major">Major</option>
+                <option value="Normal">Normal</option>
+                <option value="Trivial">Trivial</option>
+            </select>
+
+            <label for="sprint">Sprint:</label>
+            <select id="sprint" name="sprint" required>
+                <option value="">--Select Sprint--</option>
+                <option value="Sprint1">Sprint1</option>
+                <option value="Sprint2">Sprint2</option>
+                <option value="Sprint3">Sprint3</option>
+            </select>
+
+            <input type="submit" value="Create">
+        </form>
+    </div>
+</div>
+
+<!-- Подключение скриптов -->
+<script src="js/kanbanBoard.js"></script>
+</body>
+</html>

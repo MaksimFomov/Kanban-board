@@ -52,6 +52,12 @@ public class User implements UserDetails {
                     CascadeType.DETACH, CascadeType.REFRESH})
     private Set<Project> projects = new HashSet<>();
 
+    @ManyToMany(mappedBy = "users",
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+                    CascadeType.DETACH, CascadeType.REFRESH})
+    private Set<Task> tasks = new HashSet<>();
+
     public User() {}
 
     public User(int id, String email, String password, boolean active, String firstName, String lastName, String position, LocalDateTime dateOfCreated, Set<Role> roles, Set<Project> projects) {

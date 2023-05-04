@@ -32,6 +32,12 @@ public class MainController {
         model.addAttribute("project", new Project());
         model.addAttribute("projects", projectService.getAllProjects());
         model.addAttribute("allUsers", userService.getAllUsers());
+
         return "homePage";
+    }
+
+    @GetMapping("/test")
+    public String test() {
+        return "kanbanBoard";
     }
 }

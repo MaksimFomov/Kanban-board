@@ -3,6 +3,7 @@ package com.fomov.kanbanboard.service;
 import com.fomov.kanbanboard.enums.Role;
 import com.fomov.kanbanboard.model.User;
 import com.fomov.kanbanboard.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Transactional
     public boolean createUser(User user) {
         if(userRepository.findByEmail(user.getEmail()) != null) return false;
 
