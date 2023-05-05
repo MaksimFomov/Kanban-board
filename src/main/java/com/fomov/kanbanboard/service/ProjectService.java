@@ -9,6 +9,7 @@ import com.fomov.kanbanboard.repository.TaskRepository;
 import com.fomov.kanbanboard.repository.TaskStatusRepository;
 import com.fomov.kanbanboard.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

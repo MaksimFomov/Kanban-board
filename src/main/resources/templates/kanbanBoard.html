@@ -7,6 +7,7 @@
     <script th:src="@{/js/kanbanBoard.js}"></script>
 </head>
 <body>
+<a th:href="@{/homePage}">Come back</a>
 <button type="button" class="btn btn-primary" onclick="openModal()">Create Task</button>
 
 <div id="modal" class="modal">
@@ -74,11 +75,12 @@
             <ul>
                 <li th:each="task : ${tasksByStatus['Backlog']}">
                     <div class="task">
-                        <h3 th:text="${task.name}"></h3>
-                        <p th:text="${task.description}"></p>
-                        <span th:text="${task.estimate}"></span>
-                        <span th:text="${task.priority}"></span>
-                        <span th:text="${task.sprint}"></span>
+                        <h3 th:text="'Name: ' + ${task.name}"></h3>
+                        <p th:text="'Description: ' + ${task.description}"></p>
+                        <p th:text="'User: ' + ${task.user.email} + '(' + ${task.user.position} + ')'"></p>
+                        <span th:text="'Estimate: ' + ${task.estimate}"></span>
+                        <span th:text="'Priority: ' + ${task.priority}"></span>
+                        <span th:text="'Sprint: ' + ${task.sprint}"></span>
                     </div>
                 </li>
             </ul>
@@ -87,14 +89,15 @@
     <div class="column">
         <h2>In progress</h2>
         <div>
-            <ul style="margin-left: 0; padding-left: 0">
-                <li style="list-style-type: none" th:each="task : ${tasksByStatus['In progress']}">
+            <ul>
+                <li th:each="task : ${tasksByStatus['In progress']}">
                     <div class="task">
-                        <h3 th:text="${task.name}"></h3>
-                        <p th:text="${task.description}"></p>
-                        <span th:text="${task.estimate}"></span>
-                        <span th:text="${task.priority}"></span>
-                        <span th:text="${task.sprint}"></span>
+                        <h3 th:text="'Name: ' + ${task.name}"></h3>
+                        <p th:text="'Description: ' + ${task.description}"></p>
+                        <p th:text="'User: ' + ${task.user.email} + '(' + ${task.user.position} + ')'"></p>
+                        <span th:text="'Estimate: ' + ${task.estimate}"></span>
+                        <span th:text="'Priority: ' + ${task.priority}"></span>
+                        <span th:text="'Sprint: ' + ${task.sprint}"></span>
                     </div>
                 </li>
             </ul>
@@ -106,11 +109,12 @@
             <ul>
                 <li th:each="task : ${tasksByStatus['QA']}">
                     <div class="task">
-                        <h3 th:text="${task.name}"></h3>
-                        <p th:text="${task.description}"></p>
-                        <span th:text="${task.estimate}"></span>
-                        <span th:text="${task.priority}"></span>
-                        <span th:text="${task.sprint}"></span>
+                        <h3 th:text="'Name: ' + ${task.name}"></h3>
+                        <p th:text="'Description: ' + ${task.description}"></p>
+                        <p th:text="'User: ' + ${task.user.email} + '(' + ${task.user.position} + ')'"></p>
+                        <span th:text="'Estimate: ' + ${task.estimate}"></span>
+                        <span th:text="'Priority: ' + ${task.priority}"></span>
+                        <span th:text="'Sprint: ' + ${task.sprint}"></span>
                     </div>
                 </li>
             </ul>
@@ -122,11 +126,12 @@
             <ul>
                 <li th:each="task : ${tasksByStatus['Done']}">
                     <div class="task">
-                        <h3 th:text="${task.name}"></h3>
-                        <p th:text="${task.description}"></p>
-                        <span th:text="${task.estimate}"></span>
-                        <span th:text="${task.priority}"></span>
-                        <span th:text="${task.sprint}"></span>
+                        <h3 th:text="'Name: ' + ${task.name}"></h3>
+                        <p th:text="'Description: ' + ${task.description}"></p>
+                        <p th:text="'User: ' + ${task.user.email} + '(' + ${task.user.position} + ')'"></p>
+                        <span th:text="'Estimate: ' + ${task.estimate}"></span>
+                        <span th:text="'Priority: ' + ${task.priority}"></span>
+                        <span th:text="'Sprint: ' + ${task.sprint}"></span>
                     </div>
                 </li>
             </ul>

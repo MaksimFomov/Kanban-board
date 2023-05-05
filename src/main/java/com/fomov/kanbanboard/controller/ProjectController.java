@@ -38,6 +38,7 @@ public class ProjectController {
         model.addAttribute("project", projectService.getProjectById(id));
         model.addAttribute("taskStatuses", taskStatusService.getAllStatuses());
         model.addAttribute("tasksByStatus", projectService.getTasksByStatus(id));
+
         return "kanbanBoard";
     }
 }
