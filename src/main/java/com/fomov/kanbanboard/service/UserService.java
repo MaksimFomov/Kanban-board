@@ -40,6 +40,7 @@ public class UserService {
         return true;
     }
 
+    @Transactional
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }

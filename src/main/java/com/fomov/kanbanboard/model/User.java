@@ -6,10 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -50,17 +47,17 @@ public class User implements UserDetails {
             fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE,
                     CascadeType.DETACH, CascadeType.REFRESH})
-    private Set<Project> projects = new HashSet<>();
+    private List<Project> projects;
 
-    @ManyToMany(mappedBy = "users",
+    @OneToMany(mappedBy = "user",
             fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE,
                     CascadeType.DETACH, CascadeType.REFRESH})
-    private Set<Task> tasks = new HashSet<>();
+    private List<Task> tasks;
 
     public User() {}
 
-    public User(int id, String email, String password, boolean active, String firstName, String lastName, String position, LocalDateTime dateOfCreated, Set<Role> roles, Set<Project> projects) {
+    public User(int id, String email, String password, boolean active, String firstName, String lastName, String position, LocalDateTime dateOfCreated, Set<Role> roles, List<Project> projects, List<Task> tasks) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -71,6 +68,7 @@ public class User implements UserDetails {
         this.dateOfCreated = dateOfCreated;
         this.roles = roles;
         this.projects = projects;
+        this.tasks = tasks;
     }
 
     public int getId() {
@@ -146,12 +144,20 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public Set<Project> getProjects() {
+    public List<Project> getProjects() {
         return projects;
     }
 
-    public void setProjects(Set<Project> projects) {
+    public void setProjects(List<Project> projects) {
         this.projects = projects;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
     @Override
@@ -159,12 +165,12 @@ public class User implements UserDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && active == user.active && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(position, user.position) && Objects.equals(dateOfCreated, user.dateOfCreated) && Objects.equals(roles, user.roles) && Objects.equals(projects, user.projects);
+        return id == user.id && active == user.active && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(position, user.position) && Objects.equals(dateOfCreated, user.dateOfCreated) && Objects.equals(roles, user.roles) && Objects.equals(projects, user.projects) && Objects.equals(tasks, user.tasks);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, password, active, firstName, lastName, position, dateOfCreated, roles, projects);
+        return Objects.hash(id, email, password, active, firstName, lastName, position, dateOfCreated, roles, projects, tasks);
     }
 
     //Security

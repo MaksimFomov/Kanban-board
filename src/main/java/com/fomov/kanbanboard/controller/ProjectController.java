@@ -1,17 +1,17 @@
 package com.fomov.kanbanboard.controller;
 
 import com.fomov.kanbanboard.model.Project;
+import com.fomov.kanbanboard.model.Task;
 import com.fomov.kanbanboard.repository.UserRepository;
 import com.fomov.kanbanboard.service.ProjectService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
+@RequestMapping("/projects")
 public class ProjectController {
     private final ProjectService projectService;
 
@@ -19,7 +19,7 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
-    @PostMapping("/createProject")
+    @PostMapping("/create")
     public String createProject(@ModelAttribute("project") Project project, @RequestParam("users") List<Long> userIds, Model model) {
         if (!projectService.createProject(project, userIds)) {
             model.addAttribute("errorMessage", "Project with name " + project.getName() + " already exists");
@@ -27,5 +27,12 @@ public class ProjectController {
         }
 
         return "redirect:/homePage";
+    }
+
+    @GetMapping("/open/{id}")
+    public String openProject(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("task", new Task());
+        model.addAttribute("project", projectService.getProjectById(id));
+        return "kanbanBoard";
     }
 }

@@ -8,10 +8,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class ProjectService {
@@ -27,7 +24,7 @@ public class ProjectService {
     public boolean createProject(Project project, List<Long> userIds) {
         if(projectRepository.findByName(project.getName()) != null) return false;
 
-        Set<User> users = new HashSet<>();
+        List<User> users = new ArrayList<>();
         for (Long id : userIds) {
             Optional<User> user = userRepository.findById(id);
             if (user.isPresent()) {
@@ -41,7 +38,13 @@ public class ProjectService {
         return true;
     }
 
+    @Transactional
     public List<Project> getAllProjects() {
         return projectRepository.findAll();
+    }
+
+    @Transactional
+    public Project getProjectById(int id) {
+        return projectRepository.findById(id);
     }
 }

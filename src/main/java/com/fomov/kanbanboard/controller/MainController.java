@@ -35,9 +35,4 @@ public class MainController {
 
         return "homePage";
     }
-
-    @GetMapping("/test")
-    public String test() {
-        return "kanbanBoard";
-    }
 }
