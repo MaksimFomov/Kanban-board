@@ -9,7 +9,6 @@ import com.fomov.kanbanboard.repository.TaskRepository;
 import com.fomov.kanbanboard.repository.TaskStatusRepository;
 import com.fomov.kanbanboard.repository.UserRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -48,8 +47,8 @@ public class ProjectService {
     }
 
     @Transactional
-    public List<Project> getAllProjects() {
-        return projectRepository.findAll();
+    public List<Project> getAllProjectsByUser(User user) {
+        return projectRepository.findByUsers(user);
     }
 
     @Transactional
@@ -67,4 +66,8 @@ public class ProjectService {
         return tasksByStatus;
     }
 
+    public boolean deleteProject(int projectId) {
+        projectRepository.delete(projectRepository.findById(projectId));
+        return true;
+    }
 }

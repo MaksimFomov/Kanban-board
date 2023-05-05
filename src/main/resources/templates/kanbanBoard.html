@@ -8,7 +8,8 @@
 </head>
 <body>
 <a th:href="@{/homePage}">Come back</a>
-<button type="button" class="btn btn-primary" onclick="openModal()">Create Task</button>
+
+<button th:if="${userRole == '[ROLE_MANAGER]'}" type="button" class="btn btn-primary" onclick="openModal()">Create Task</button>
 
 <div id="modal" class="modal">
     <div class="modal-content">

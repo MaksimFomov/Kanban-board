@@ -31,7 +31,7 @@
                         <textarea id="description" th:field="*{description}" name="description" required></textarea>
 
                         <label for="team">Team:</label>
-                        <select th:field="*{users}" id="team" name="team" multiple="multiple">
+                        <select th:field="*{users}" id="team" name="team" multiple="multiple" required>
                             <option th:each="user : ${allUsers}" th:value="${user.id}" th:text="${user.email} + ' (' + ${user.position} + ')'"></option>
                         </select>
 
@@ -63,8 +63,12 @@
                     </td>
                     <td>
                         <a th:href="@{/projects/open/{id}(id=${project.id})}">Open</a>
-                        <a th:href="@{/projects/edit/{id}(id=${project.id})}">Edit</a>
-                        <a th:href="@{/projects/delete/{id}(id=${project.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+                            <a th:if="${userRole == '[ROLE_MANAGER]'}" th:href="@{/projects/edit/{id}(id=${project.id})}">Edit</a>
+                            <form th:if="${userRole == '[ROLE_MANAGER]'}" th:action="@{/projects/delete/{id}(id=${project.id})}" method="post" onsubmit="return confirm('Are you sure?')">
+                                <input type="hidden" name="_method" value="DELETE" />
+                                <input type="hidden" th:name="${_csrf.parameterName}"  th:value="${_csrf.token}"/>
+                                <button type="submit">Delete</button>
+                            </form>
                     </td>
                 </tr>
                 </tbody>
