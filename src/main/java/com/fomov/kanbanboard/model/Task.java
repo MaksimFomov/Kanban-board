@@ -23,7 +23,7 @@ public class Task {
     @Column(name = "priority", nullable = false)
     private String priority;
 
-    @OneToOne(fetch = FetchType.LAZY,
+    @ManyToOne(fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE,
                     CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "status_id", nullable = false)

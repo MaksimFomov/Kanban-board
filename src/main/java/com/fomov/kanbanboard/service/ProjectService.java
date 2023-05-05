@@ -1,11 +1,12 @@
 package com.fomov.kanbanboard.service;
 
-import com.fomov.kanbanboard.enums.TaskStatus;
 import com.fomov.kanbanboard.model.Project;
 import com.fomov.kanbanboard.model.Task;
+import com.fomov.kanbanboard.model.TaskStatus;
 import com.fomov.kanbanboard.model.User;
 import com.fomov.kanbanboard.repository.ProjectRepository;
 import com.fomov.kanbanboard.repository.TaskRepository;
+import com.fomov.kanbanboard.repository.TaskStatusRepository;
 import com.fomov.kanbanboard.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -18,11 +19,13 @@ public class ProjectService {
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
     private final TaskRepository taskRepository;
+    private final TaskStatusRepository taskStatusRepository;
 
-    public ProjectService(ProjectRepository projectRepository, UserRepository userRepository, TaskRepository taskRepository) {
+    public ProjectService(ProjectRepository projectRepository, UserRepository userRepository, TaskRepository taskRepository, TaskStatusRepository taskStatusRepository) {
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
         this.taskRepository = taskRepository;
+        this.taskStatusRepository = taskStatusRepository;
     }
 
     @Transactional
@@ -54,12 +57,13 @@ public class ProjectService {
     }
 
     @Transactional
-    public Map<String, List<Task>> getTasksByStatus() {
+    public Map<String, List<Task>> getTasksByStatus(int projectId) {
         Map<String, List<Task>> tasksByStatus = new HashMap<>();
-        for (TaskStatus status : TaskStatus.values()) {
-            List<Task> tasks = taskRepository.findByStatus(status);
-            tasksByStatus.put(status.toString(), tasks);
+        for (TaskStatus status: taskStatusRepository.findAll()) {
+            List<Task> tasks = taskRepository.findByStatusAndProjectId(status, projectId);
+            tasksByStatus.put(status.getName(), tasks);
         }
         return tasksByStatus;
     }
+
 }

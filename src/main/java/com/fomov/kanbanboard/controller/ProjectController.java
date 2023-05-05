@@ -4,6 +4,7 @@ import com.fomov.kanbanboard.model.Project;
 import com.fomov.kanbanboard.model.Task;
 import com.fomov.kanbanboard.repository.UserRepository;
 import com.fomov.kanbanboard.service.ProjectService;
+import com.fomov.kanbanboard.service.TaskStatusService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +15,11 @@ import java.util.List;
 @RequestMapping("/projects")
 public class ProjectController {
     private final ProjectService projectService;
+    private final TaskStatusService taskStatusService;
 
-    public ProjectController(ProjectService projectService, UserRepository userRepository) {
+    public ProjectController(ProjectService projectService, UserRepository userRepository, TaskStatusService taskStatusService) {
         this.projectService = projectService;
+        this.taskStatusService = taskStatusService;
     }
 
     @PostMapping("/create")
@@ -33,7 +36,8 @@ public class ProjectController {
     public String openProject(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("task", new Task());
         model.addAttribute("project", projectService.getProjectById(id));
-        model.addAttribute("tasksByStatus", projectService.getTasksByStatus());
+        model.addAttribute("taskStatuses", taskStatusService.getAllStatuses());
+        model.addAttribute("tasksByStatus", projectService.getTasksByStatus(id));
         return "kanbanBoard";
     }
 }

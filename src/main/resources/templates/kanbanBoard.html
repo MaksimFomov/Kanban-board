@@ -47,10 +47,7 @@
                 <label for="status">Status:</label>
                 <select th:field="*{status}" id="status" name="status" required>
                     <option value="">Select a status</option>
-                    <option value="Backlog">Backlog</option>
-                    <option value="In progress">In progress</option>
-                    <option value="QA">QA</option>
-                    <option value="Done">Done</option>
+                    <option th:each="status : ${taskStatuses}" th:value="${status.id}" th:text="${status.name}"></option>
                 </select>
             </div>
             <div>
@@ -73,79 +70,66 @@
 <div class="kanban-board">
     <div class="column">
         <h2>Backlog</h2>
-        <div class="task">
-
-            <h3>Task 1</h3>
-            <p>Description of task 1</p>
-            <span>Estimate: 1 day</span>
-            <span>Priority: Critical</span>
-            <span>Status: Backlog</span>
-            <span>Sprint: Sprint1</span>
-        </div>
-        <div class="task">
-            <h3>Task 2</h3>
-            <p>Description of task 2</p>
-            <span>Estimate: 2 days</span>
-            <span>Priority: Normal</span>
-            <span>Status: Backlog</span>
-            <span>Sprint: Sprint2</span>
+        <div>
+            <ul>
+                <li th:each="task : ${tasksByStatus['Backlog']}">
+                    <div class="task">
+                        <h3 th:text="${task.name}"></h3>
+                        <p th:text="${task.description}"></p>
+                        <span th:text="${task.estimate}"></span>
+                        <span th:text="${task.priority}"></span>
+                        <span th:text="${task.sprint}"></span>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
     <div class="column">
         <h2>In progress</h2>
-        <div class="task">
-            <h3>Task 3</h3>
-            <p>Description of task 3</p>
-            <span>Estimate: 3 days</span>
-            <span>Priority: Major</span>
-            <span>Status: In progress</span>
-            <span>Sprint: Sprint2</span>
-        </div>
-        <div class="task">
-            <h3>Task 4</h3>
-            <p>Description of task 4</p>
-            <span>Estimate: 1 day</span>
-            <span>Priority: Trivial</span>
-            <span>Status: In progress</span>
-            <span>Sprint: Sprint3</span>
+        <div>
+            <ul style="margin-left: 0; padding-left: 0">
+                <li style="list-style-type: none" th:each="task : ${tasksByStatus['In progress']}">
+                    <div class="task">
+                        <h3 th:text="${task.name}"></h3>
+                        <p th:text="${task.description}"></p>
+                        <span th:text="${task.estimate}"></span>
+                        <span th:text="${task.priority}"></span>
+                        <span th:text="${task.sprint}"></span>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
     <div class="column">
         <h2>QA</h2>
-        <div class="task">
-            <h3>Task 5</h3>
-            <p>Description of task 5</p>
-            <span>Estimate: 2 days</span>
-            <span>Priority: Normal</span>
-            <span>Status: QA</span>
-            <span>Sprint: Sprint3</span>
+        <div>
+            <ul>
+                <li th:each="task : ${tasksByStatus['QA']}">
+                    <div class="task">
+                        <h3 th:text="${task.name}"></h3>
+                        <p th:text="${task.description}"></p>
+                        <span th:text="${task.estimate}"></span>
+                        <span th:text="${task.priority}"></span>
+                        <span th:text="${task.sprint}"></span>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
     <div class="column">
         <h2>Done</h2>
-        <div class="task">
-            <h3>Task 6</h3>
-            <p>Description of task 6</p>
-            <span>Estimate: 1 day</span>
-            <span>Priority: Trivial</span>
-            <span>Status: Done</span>
-            <span>Sprint: Sprint1</span>
-        </div>
-        <div class="task">
-            <h3>Task 7</h3>
-            <p>Description of task 7</p>
-            <span>Estimate: 3 days</span>
-            <span>Priority: Major</span>
-            <span>Status: Done</span>
-            <span>Sprint: Sprint2</span>
-        </div>
-        <div class="task">
-            <h3>Task 8</h3>
-            <p>Description of task 8</p>
-            <span>Estimate: 2 days</span>
-            <span>Priority: Normal</span>
-            <span>Status: Done</span>
-            <span>Sprint: Sprint3</span>
+        <div>
+            <ul>
+                <li th:each="task : ${tasksByStatus['Done']}">
+                    <div class="task">
+                        <h3 th:text="${task.name}"></h3>
+                        <p th:text="${task.description}"></p>
+                        <span th:text="${task.estimate}"></span>
+                        <span th:text="${task.priority}"></span>
+                        <span th:text="${task.sprint}"></span>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
