@@ -1,8 +1,11 @@
 package com.fomov.kanbanboard.service;
 
+import com.fomov.kanbanboard.enums.TaskStatus;
 import com.fomov.kanbanboard.model.Project;
+import com.fomov.kanbanboard.model.Task;
 import com.fomov.kanbanboard.model.User;
 import com.fomov.kanbanboard.repository.ProjectRepository;
+import com.fomov.kanbanboard.repository.TaskRepository;
 import com.fomov.kanbanboard.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -14,10 +17,12 @@ import java.util.*;
 public class ProjectService {
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
+    private final TaskRepository taskRepository;
 
-    public ProjectService(ProjectRepository projectRepository, UserRepository userRepository) {
+    public ProjectService(ProjectRepository projectRepository, UserRepository userRepository, TaskRepository taskRepository) {
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
+        this.taskRepository = taskRepository;
     }
 
     @Transactional
@@ -46,5 +51,15 @@ public class ProjectService {
     @Transactional
     public Project getProjectById(int id) {
         return projectRepository.findById(id);
+    }
+
+    @Transactional
+    public Map<String, List<Task>> getTasksByStatus() {
+        Map<String, List<Task>> tasksByStatus = new HashMap<>();
+        for (TaskStatus status : TaskStatus.values()) {
+            List<Task> tasks = taskRepository.findByStatus(status);
+            tasksByStatus.put(status.toString(), tasks);
+        }
+        return tasksByStatus;
     }
 }

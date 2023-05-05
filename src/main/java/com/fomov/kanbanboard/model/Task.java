@@ -23,8 +23,11 @@ public class Task {
     @Column(name = "priority", nullable = false)
     private String priority;
 
-    @Column(name = "status", nullable = false)
-    private String status;
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+                    CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "status_id", nullable = false)
+    private TaskStatus status;
 
     @Column(name = "sprint", nullable = false)
     private String sprint;
@@ -48,7 +51,7 @@ public class Task {
     public Task() {
     }
 
-    public Task(int id, String name, String description, String estimate, String priority, String status, String sprint, LocalDateTime dateOfCreated, User user, Project project) {
+    public Task(int id, String name, String description, String estimate, String priority, TaskStatus status, String sprint, LocalDateTime dateOfCreated, User user, Project project) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -101,11 +104,11 @@ public class Task {
         this.priority = priority;
     }
 
-    public String getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
     }
 

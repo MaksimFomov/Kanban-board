@@ -33,6 +33,7 @@ public class ProjectController {
     public String openProject(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("task", new Task());
         model.addAttribute("project", projectService.getProjectById(id));
+        model.addAttribute("tasksByStatus", projectService.getTasksByStatus());
         return "kanbanBoard";
     }
 }
